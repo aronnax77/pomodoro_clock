@@ -1,0 +1,37 @@
+<!-- Author: Richard Myatt
+     4 March 2018
+
+     Radial progress bar
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="css/radial_bar_component.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Radial Progress Bar</title>
+</head>
+<body>
+
+  <header>
+    <h1>Radial Progress Bar</h1>
+  </header>
+
+  <div id="progress">
+    <div class="container1">
+      <display :offset="offset" :slide="slide"></display>
+    </div>
+
+    <div class="container2">
+      <input type="range" min="0" max="100" v-model="slide" @input="calcOffset">
+    </div>
+  </div>
+
+
+   <script src="https://unpkg.com/vue@2.0.3/dist/vue.js"></script>
+   <script src="js/radial_bar_component.js"></script>
+
+</body>
+</html>

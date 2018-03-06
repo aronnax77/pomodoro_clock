@@ -1,0 +1,40 @@
+/* Author: Richard Myatt
+   4 March 2018
+
+   Radial progress bar
+*/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#display {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin-bottom: 30px;
+}
+
+.number {
+  display:block;
+  position: absolute;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  font-size: 1.7em;
+  color: #666;
+  width: 120px;
+  height: 120px;
+}
+
+svg {
+  transform: rotate(-90deg);
+}
+
+input {
+  align-self: flex-end;
+}

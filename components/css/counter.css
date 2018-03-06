@@ -1,0 +1,67 @@
+/* Author: Richard Myatt
+   Date: 5 March 2018
+
+   Simple counter using vue.js components
+*/
+
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono:400,700');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: lightgray;
+}
+
+header {
+  text-align: center;
+  padding: 10px;
+  color: #222;
+  background-color: lightgreen;
+}
+
+.container {
+  font-family: 'Roboto Mono', monospace;
+  height: 300px;
+  width: 350px;
+  background-color: #222;
+  color: lightgreen;
+  margin: 100px auto;
+  border-radius: 50% / 10%;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.output {
+  height: 100px;
+  width: 120px;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 4em;
+}
+
+.btns {
+  height: 50px;
+  width: 120px;
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 2em;
+}
+
+.dec {
+  margin-left: 10px;
+}
+
+.inc {
+  margin-right: 10px;
+}
+
+.dec:hover, .inc:hover {
+  cursor: pointer;
+}

@@ -1,0 +1,9 @@
+https://medium.com/@andsens/radial-progress-indicator-using-css-a917b80c43f9
+
+https://fromanegg.com/post/2013/01/23/100-pure-css-radial-progress-bar/
+
+http://www.tothenew.com/blog/tutorial-to-create-a-circular-progress-bar-with-canvas/
+
+https://codepen.io/xgad/post/svg-radial-progress-meters
+
+#f77a52

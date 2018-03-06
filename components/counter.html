@@ -1,0 +1,30 @@
+<!-- Author: Richard Myatt
+     Date: 5 March 2018
+
+     Simple counter using vue.js components
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="css/counter.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Simple Counter</title>
+</head>
+<body>
+
+  <header>
+    <h1>Simple Counter</h1>
+  </header>
+
+  <div class="container" id="app">
+    <counter @inc="increment" @dec="decrement" :counter="counter"></counter>
+  </div>
+
+  <script src="https://unpkg.com/vue@2.0.3/dist/vue.js"></script>
+  <script src="js/counter.js"></script>
+
+</body>
+</html>
