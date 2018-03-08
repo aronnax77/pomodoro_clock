@@ -11,16 +11,27 @@
 
   <div id="app">
     <heading :title="title"></heading>
-    <div class="container-title">
+
+    <div class="container">
 
       <div class="container-counters">
-        <counter :counter="counterActive" :title="titleActive"></counter>
-        <counter :counter="counterRest" :title="titleRest"></counter>
+        <counter :counter="counterActive"
+        :title="titleActive"
+        @dec="decrement(1)"
+        @inc="increment(1)"></counter>
+
+        <counter :counter="counterRest"
+        :title="titleRest"
+        @dec="decrement(2)"
+        @inc="increment(2)"></counter>
       </div>
+
       <div class="container-progress">
-        <progressbar :offset="offset" percentage="1100"></progressbar>
+        <progressbar :offset="offset"
+        @startstop="timerStartStop"
+        :minutes="minutes"
+        :seconds="seconds"></progressbar>
       </div>
-    </div>
 
   </div>
 

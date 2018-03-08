@@ -17,24 +17,75 @@ var Counter = {
 };
 
 var Progress = {
-      props: ["offset", "percentage"],
-      template: '<div id="display"><svg width="120" height="120" viewBox="0 0 120 120"><circle cx= "60" cy="60" r="54" fill="none" stroke="#e6e6e6" stroke-width="12"/><circle cx= "60" cy="60" r="54" fill="none" stroke="green" stroke-width="12" stroke-dasharray="339.292" :stroke-dashoffset="offset"/></svg><div class="number"><span>{{ percentage }}%</span></div></div>'
+      props: ["offset", "minutes", "seconds"],
+      template: '<div id="display" @click="tick"><svg width="200" height="200" viewBox="0 0 200 200"><circle cx= "100" cy="100" r="94" fill="none" stroke="#666" stroke-width="12"/><circle cx= "100" cy="100" r="94" fill="none" stroke="green" stroke-width="12" stroke-dasharray="590.619" :stroke-dashoffset="offset"/></svg><div class="timer"><div class="minutes"><span>{{ minutes }}:</span></div><div class="seconds"><span>{{ seconds }}</span></div></div></div>',
+      methods: {
+        tick: function() {
+          this.$emit("startstop");
+        }
+      }
     };
 
-var mainApp = new Vue({
+var main = new Vue({
   el: "#app",
   data: {
     title: "Pomodoro Clock",
     titleActive: "ACTIVE",
     titleRest: "REST",
-    counterActive: 40,
-    counterRest: 5,
-    offset: "339.292",
-    percentage: "0"
+    running: false,
+    counterActive: 1,
+    counterRest: 1,
+    offset: "590.619",
+    percentage: "0",
+    minutes: 0,
+    seconds: 0
   },
   components: {
     "heading": Head,
     "counter": Counter,
     "progressbar": Progress
-  }
+  },
+  methods: {
+        increment: function(num) {
+          if(num === 1 && this.counterActive < 90) {
+            this.counterActive += 1;
+          } else if(num === 2 && this.counterRest < 60) {
+            this.counterRest += 1;
+          }
+        },
+        decrement: function(num) {
+          if(num === 1 && this.counterActive > 0) {
+            this.counterActive -= 1;
+          } else if(num === 2 && this.counterRest > 0) {
+            this.counterRest -= 1;
+          }
+        },
+        timerStartStop: function() {
+          var snd = new Audio("audio/beep-05.mp3");
+          var count = 1;
+          var numSecs = this.counterActive * 60;
+          var timer = setInterval(function() {
+                      main.running = true;
+                      main.seconds = numSecs % 60;
+                      main.minutes = (numSecs - main.seconds)/60;
+                      showProgress(numSecs);
+                      numSecs -= 1;
+                      if(numSecs === -1 && count === 1) {
+                        console.log("finished active session");
+                        numSecs = main.counterRest * 60;
+                        count = 2;
+                        snd.play();
+                      } else if(numSecs === -1 && count === 2){
+                        console.log("finished rest period");
+                        clearInterval(timer);
+                        snd.play();
+                      }
+
+                  }, 1000);
+        }
+      }
 });
+
+function showProgress(rem) {
+  main.offset = Math.PI * 2 * 94 * (rem / (main.counterActive * 60));
+}
