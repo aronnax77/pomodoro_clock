@@ -1,3 +1,5 @@
+var timer;
+
 var Head = {
   props: ["title"],
   template: "<header><h1>{{ title }}</h1></header>"
@@ -61,7 +63,39 @@ var main = new Vue({
           }
         },
         timerStartStop: function() {
-          var snd = new Audio("audio/beep-05.mp3");
+          if(this.running === false) {
+            console.log("set running equal true");
+            var snd = new Audio("audio/beep-05.mp3");
+            var count = 1;
+            var numSecs = this.counterActive * 60;
+            timer = setInterval(function() {
+                        main.running = true;
+                        main.seconds = numSecs % 60;
+                        main.minutes = (numSecs - main.seconds)/60;
+                        showProgress(numSecs, count);
+                        numSecs -= 1;
+                        if(numSecs === -1 && count === 1) {
+                          console.log("finished active session");
+                          numSecs = main.counterRest * 60;
+                          count = 2;
+                          snd.play();
+                        } else if(numSecs === -1 && count === 2){
+                          console.log("finished rest period");
+                          clearInterval(timer);
+                          snd.play();
+                        }
+
+                    }, 1000);
+            this.running = true;
+          } else if(this.running === true) {
+            console.log("set running equal false");
+            this.running = false;
+            clearInterval(timer);
+            this.minutes = 0;
+            this.seconds = 0;
+            this.offset  = "590.619";
+          }
+          /*var snd = new Audio("audio/beep-05.mp3");
           var count = 1;
           var numSecs = this.counterActive * 60;
           var timer = setInterval(function() {
@@ -81,11 +115,16 @@ var main = new Vue({
                         snd.play();
                       }
 
-                  }, 1000);
+                  }, 1000);*/
         }
       }
 });
 
-function showProgress(rem) {
-  main.offset = Math.PI * 2 * 94 * (rem / (main.counterActive * 60));
+function showProgress(rem, cnt) {
+  if(cnt === 1) {
+    main.offset = Math.PI * 2 * 94 * (rem / (main.counterActive * 60));
+  } else if(cnt === 2) {
+    main.offset = Math.PI * 2 * 94 * (rem / (main.counterRest * 60));
+  }
+
 }
