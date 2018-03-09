@@ -1,10 +1,19 @@
+/* Author: Richard Myatt
+   Date: 9 March 2018
+
+   Pomodoro Clock.  A challenge set by FreeCodeCamp.
+*/
+
+// global variable for timer
 var timer;
 
+// header
 var Head = {
   props: ["title"],
   template: "<header><h1>{{ title }}</h1></header>"
 };
 
+// counter
 var Counter = {
   props: ["title", "counter"],
   template: '<div id="counter"><div class="counter-title"><span>{{ title }}</span></div><div class="output"><span>{{ counter }}</span></div><div class="btns"><span class="dec" @click="decHandler">-</span><span class="inc" @click="incHandler">+</span></div></div>',
@@ -18,6 +27,7 @@ var Counter = {
   }
 };
 
+// radial progress bar
 var Progress = {
       props: ["offset", "minutes", "seconds", "bg", "fg"],
       template: '<div id="display" @click="tick"><svg width="200" height="200" viewBox="0 0 200 200"><circle cx= "100" cy="100" r="94" fill="none" :stroke="bg" stroke-width="12"/><circle cx= "100" cy="100" r="94" fill="none" :stroke="fg" stroke-width="12" stroke-dasharray="590.619" :stroke-dashoffset="offset"/></svg><div class="timer"><div class="minutes"><span>{{ minutes }}:</span></div><div class="seconds"><span>{{ seconds }}</span></div></div></div>',
@@ -66,7 +76,7 @@ var main = new Vue({
         },
         timerStartStop: function() {
           if(this.running === false) {
-            var snd = new Audio("audio/beep-05.mp3");
+            var snd = new Audio("https://cdn.rawgit.com/aronnax77/pomodoro_clock/master/audio/beep-05.mp3");
             var count = 1;
             var numSecs = this.counterActive * 60;
             timer = setInterval(function() {
@@ -102,6 +112,7 @@ var main = new Vue({
       }
 });
 
+// helper function for timerStartStop
 function showProgress(rem, cnt) {
   if(cnt === 1) {
     main.offset = Math.PI * 2 * 94 * (rem / (main.counterActive * 60));

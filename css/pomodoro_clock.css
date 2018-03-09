@@ -1,3 +1,9 @@
+/* Author: Richard Myatt
+   Date: 9 March 2018
+
+   Pomodoro Clock.  A challenge set by FreeCodeCamp.
+*/
+
 @import url('https://fonts.googleapis.com/css?family=Roboto+Mono:400,700');
 @import url('https://fonts.googleapis.com/css?family=Berkshire+Swash|Pacifico');
 
@@ -18,7 +24,6 @@ body {
   height: 500px;
   background-color: #222;
   margin: 20px auto;
-  /*border: 2px solid blue;*/
 }
 
 .container-counters {
@@ -27,7 +32,6 @@ body {
   align-items: center;
   width: 400px;
   height: 150px;
-  /*border: 2px solid red;*/
 }
 
 header {
