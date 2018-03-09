@@ -19,8 +19,8 @@ var Counter = {
 };
 
 var Progress = {
-      props: ["offset", "minutes", "seconds"],
-      template: '<div id="display" @click="tick"><svg width="200" height="200" viewBox="0 0 200 200"><circle cx= "100" cy="100" r="94" fill="none" stroke="#666" stroke-width="12"/><circle cx= "100" cy="100" r="94" fill="none" stroke="green" stroke-width="12" stroke-dasharray="590.619" :stroke-dashoffset="offset"/></svg><div class="timer"><div class="minutes"><span>{{ minutes }}:</span></div><div class="seconds"><span>{{ seconds }}</span></div></div></div>',
+      props: ["offset", "minutes", "seconds", "bg", "fg"],
+      template: '<div id="display" @click="tick"><svg width="200" height="200" viewBox="0 0 200 200"><circle cx= "100" cy="100" r="94" fill="none" :stroke="bg" stroke-width="12"/><circle cx= "100" cy="100" r="94" fill="none" :stroke="fg" stroke-width="12" stroke-dasharray="590.619" :stroke-dashoffset="offset"/></svg><div class="timer"><div class="minutes"><span>{{ minutes }}:</span></div><div class="seconds"><span>{{ seconds }}</span></div></div></div>',
       methods: {
         tick: function() {
           this.$emit("startstop");
@@ -31,16 +31,18 @@ var Progress = {
 var main = new Vue({
   el: "#app",
   data: {
-    title: "Pomodoro Clock",
-    titleActive: "ACTIVE",
-    titleRest: "REST",
-    running: false,
-    counterActive: 1,
-    counterRest: 1,
-    offset: "590.619",
-    percentage: "0",
-    minutes: 0,
-    seconds: 0
+    title: "Pomodoro Clock",  // main title
+    titleActive: "ACTIVE",    // activity counter title
+    titleRest: "REST",        // rest counter title
+    bg: "#333",               // background colour of progress bar
+    fg: "#90EE90",            // foreground colour of progress bar
+    running: false,           // is the timer running
+    counterActive: 25,        // set value for activity counter
+    counterRest: 5,           // set value for rest counter
+    offset: "590.619",        // offset for progress bar
+    percentage: "0",          // percentage progress
+    minutes: 0,               // minutes on clock
+    seconds: 0                // seconds on clock
   },
   components: {
     "heading": Head,
@@ -64,7 +66,6 @@ var main = new Vue({
         },
         timerStartStop: function() {
           if(this.running === false) {
-            console.log("set running equal true");
             var snd = new Audio("audio/beep-05.mp3");
             var count = 1;
             var numSecs = this.counterActive * 60;
@@ -75,47 +76,28 @@ var main = new Vue({
                         showProgress(numSecs, count);
                         numSecs -= 1;
                         if(numSecs === -1 && count === 1) {
-                          console.log("finished active session");
                           numSecs = main.counterRest * 60;
+                          main.fg = "#f77a52";
                           count = 2;
                           snd.play();
                         } else if(numSecs === -1 && count === 2){
-                          console.log("finished rest period");
                           clearInterval(timer);
+                          main.fg = "#90EE90";
+                          main.offset = "590.619";
+                          main.running = false;
                           snd.play();
                         }
 
                     }, 1000);
             this.running = true;
           } else if(this.running === true) {
-            console.log("set running equal false");
             this.running = false;
             clearInterval(timer);
             this.minutes = 0;
             this.seconds = 0;
             this.offset  = "590.619";
+            this.fg = "#90EE90";
           }
-          /*var snd = new Audio("audio/beep-05.mp3");
-          var count = 1;
-          var numSecs = this.counterActive * 60;
-          var timer = setInterval(function() {
-                      main.running = true;
-                      main.seconds = numSecs % 60;
-                      main.minutes = (numSecs - main.seconds)/60;
-                      showProgress(numSecs);
-                      numSecs -= 1;
-                      if(numSecs === -1 && count === 1) {
-                        console.log("finished active session");
-                        numSecs = main.counterRest * 60;
-                        count = 2;
-                        snd.play();
-                      } else if(numSecs === -1 && count === 2){
-                        console.log("finished rest period");
-                        clearInterval(timer);
-                        snd.play();
-                      }
-
-                  }, 1000);*/
         }
       }
 });

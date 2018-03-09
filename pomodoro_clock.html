@@ -29,6 +29,8 @@
       <div class="container-progress">
         <progressbar :offset="offset"
         @startstop="timerStartStop"
+        :bg="bg"
+        :fg="fg"
         :minutes="minutes"
         :seconds="seconds"></progressbar>
       </div>
